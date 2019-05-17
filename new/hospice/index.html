@@ -1,0 +1,861 @@
+
+
+
+
+<base href="https://hospicemng.cancer.go.kr/boffice/visualization/patientDataVisualization.do?menu_no=607" />
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+
+
+
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="-1" />  
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9" />
+	<meta http-equiv="content-language" content="en" />
+	<meta name="robots" content="noindex,nofollow" />
+	<link rel="stylesheet" type="text/css" href="/boffice/css/reset.css" /> <!-- RESET -->
+	<link rel="stylesheet" type="text/css" href="/boffice/css/main.css" /> <!-- MAIN STYLE SHEET -->
+	<link rel="stylesheet" type="text/css" href="/boffice/css/2col.css" title="2col" /> <!-- DEFAULT: 2 COLUMNS -->
+	<link rel="alternate stylesheet" media="screen,projection,print" type="text/css" href="/boffice/css/1col.css" title="1col" /> <!-- ALTERNATE: 1 COLUMN -->
+	<!--[if lte IE 6]><link rel="stylesheet" media="screen,projection" type="text/css" href="css/main-ie6.css" /><![endif]--> <!-- MSIE6 -->  
+	<link rel="stylesheet" type="text/css" href="/boffice/css/style.css" /> <!-- GRAPHIC THEME -->
+	<!-- <link rel="stylesheet" media="screen,projection,print" type="text/css" href="/boffice/css/mystyle.css" />--> <!-- WRITE YOUR CSS CODE HERE -->
+	
+	<!-- Namo 에디터 -->
+	<link rel="stylesheet" type="text/css" href="/namoupload/css/namocrossuploader.css" />
+	<script type="text/javascript" src="/namoupload/js/swfobject.js"></script>
+    <script type="text/javascript" src="/namoupload/js/namocrossuploader.js"></script>
+
+	<script type="text/javascript" src="/boffice/js/jquery.js"></script>
+	<script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="/boffice/js/switcher.js"></script>
+	<script type="text/javascript" src="/boffice/js/toggle.js"></script>
+	<script type="text/javascript" src="/boffice/js/ui.core.js"></script>
+	<script type="text/javascript" src="/boffice/js/ui.tabs.js"></script>
+    <script type="text/javascript" src="/boffice/js/leftmenu.js"></script>
+    <script type="text/javascript" src="/boffice/js/jquery.function.js"></script>
+    <script type="text/javascript" src="/js/n1Util.js"></script>
+    
+    <link href="/js/calendar/jquery-ui.css" rel="stylesheet">
+    <script src="/js/calendar/jquery.js"></script>
+    <script src="/js/calendar/jquery-ui.js"></script>
+    <script type="text/javascript" src="/js/calendar/calendar.js"></script>
+
+	<script type="text/javascript">
+	$(document).ready(function(){
+		$(".tabs > ul").tabs();
+
+		//체크박스 선택 해제 스크립트
+		$('input:radio').bind('click mousedown', (function() {
+		    var isChecked;
+		    return function(event) {
+		        if(event.type == 'click') {
+		            if(isChecked) {
+		                isChecked = this.checked = false;
+		            } else {
+		                isChecked = true;
+		            }
+		    } else {
+		        isChecked = this.checked;
+		    }
+		}})());
+	});
+	</script>
+	
+	<title>완화의료</title>
+
+<script type="text/javascript">
+$(document).ready(function() {
+
+		$('.select_month').attr('disabled', false);
+		$('.result_term').find('i, span:eq(1), span:eq(3)').show().addClass('visible');
+	
+});
+var strServiceUsePatient = new Array();
+var serviceUsePatient = new Array();
+var patientFemaleAge = new Array();
+var patientMaleAge = new Array();
+var medicalType = new Array();
+var religion = new Array();
+var terminalState = new Array();
+var terminalType = new Array();
+var childType = new Array();
+var serviceUse = new Array();
+var inReason = new Array();
+var strOutReason = ["호전","사망","(환자 보호자의) <br/>귀가요청","전원(외부기관)","철회","기타"];     //입원형
+var outReason = new Array();
+var carePlace = new Array();
+var beforeCarePlace = new Array();
+
+//서비스 이용 환자 수 
+
+		strServiceUsePatient[0] = "2018-05";
+		serviceUsePatient[0] = 1549;
+
+		strServiceUsePatient[1] = "2018-06";
+		serviceUsePatient[1] = 1494;
+
+		strServiceUsePatient[2] = "2018-07";
+		serviceUsePatient[2] = 1623;
+
+		strServiceUsePatient[3] = "2018-08";
+		serviceUsePatient[3] = 1665;
+
+		strServiceUsePatient[4] = "2018-09";
+		serviceUsePatient[4] = 1362;
+
+		strServiceUsePatient[5] = "2018-10";
+		serviceUsePatient[5] = 1739;
+
+		strServiceUsePatient[6] = "2018-11";
+		serviceUsePatient[6] = 1621;
+
+		strServiceUsePatient[7] = "2018-12";
+		serviceUsePatient[7] = 1631;
+
+		strServiceUsePatient[8] = "2019-01";
+		serviceUsePatient[8] = 1738;
+
+		strServiceUsePatient[9] = "2019-02";
+		serviceUsePatient[9] = 1547;
+
+		strServiceUsePatient[10] = "2019-03";
+		serviceUsePatient[10] = 1578;
+
+		strServiceUsePatient[11] = "2019-04";
+		serviceUsePatient[11] = 1774;
+
+//성별 & 연령별 환자 수 
+
+	    patientMaleAge[0] = -0;
+	    patientFemaleAge[0] = 0;
+
+	    patientMaleAge[1] = -0;
+	    patientFemaleAge[1] = 0;
+
+	    patientMaleAge[2] = -0;
+	    patientFemaleAge[2] = 0;
+             
+				patientMaleAge[3] = "-"+2;
+				patientFemaleAge[3] = 0;
+             
+				patientMaleAge[4] = "-"+5;
+				patientFemaleAge[4] = 1;
+             
+				patientMaleAge[5] = "-"+5;
+				patientFemaleAge[5] = 4;
+             
+				patientMaleAge[6] = "-"+5;
+				patientFemaleAge[6] = 15;
+             
+				patientMaleAge[7] = "-"+23;
+				patientFemaleAge[7] = 28;
+             
+				patientMaleAge[8] = "-"+38;
+				patientFemaleAge[8] = 51;
+             
+				patientMaleAge[9] = "-"+79;
+				patientFemaleAge[9] = 83;
+             
+				patientMaleAge[10] = "-"+158;
+				patientFemaleAge[10] = 168;
+             
+				patientMaleAge[11] = "-"+267;
+				patientFemaleAge[11] = 215;
+             
+				patientMaleAge[12] = "-"+460;
+				patientFemaleAge[12] = 277;
+             
+				patientMaleAge[13] = "-"+479;
+				patientFemaleAge[13] = 271;
+             
+				patientMaleAge[14] = "-"+540;
+				patientFemaleAge[14] = 328;
+             
+				patientMaleAge[15] = "-"+605;
+				patientFemaleAge[15] = 354;
+             
+				patientMaleAge[16] = "-"+560;
+				patientFemaleAge[16] = 428;
+             
+				patientMaleAge[17] = "-"+327;
+				patientFemaleAge[17] = 288;
+             
+				patientMaleAge[18] = "-"+96;
+				patientFemaleAge[18] = 125;
+             
+				patientMaleAge[19] = "-"+21;
+				patientFemaleAge[19] = 19;
+             
+				patientMaleAge[20] = "-"+4;
+				patientFemaleAge[20] = 1;
+      
+            patientMaleAge[20] = "-"+4;
+            patientFemaleAge[20] = 2;
+
+//의료 보장 분포
+medicalType[0] = 556;     //1.의료급여 1종 
+medicalType[1] = 9;     //2.의료급여 2종
+medicalType[2] = 5673;     //3.건강보험
+medicalType[3] = 93;     //4.기타
+//종교 분포
+religion[0] = 1754;     //1.기독교
+religion[1] = 1057;     //2.불교
+religion[2] = 900;     //3.천주교
+religion[3] = 110;     //4.기타
+religion[4] = 2510;    //5.응답없음
+//말기 병식 분포
+terminalState[0] = 1126;     //1.말기병식 없음 
+terminalState[1] = 5205;     //2.말기병식 있음
+//말기 진단 분류
+terminalType[0] = 6326;     //암 
+terminalType[1] = 0;     //ADIS
+terminalType[2] = 2;     //COPD
+terminalType[3] = 3;     //LC
+//질병 진단 분류
+
+childType[0] = 0; 
+
+childType[1] = 0; 
+
+childType[2] = 0; 
+
+childType[3] = 0; 
+
+childType[4] = 0; 
+
+childType[5] = 0; 
+
+childType[6] = 0; 
+
+childType[7] = 0; 
+
+childType[8] = 0; 
+
+childType[9] = 0; 
+
+childType[10] = 0; 
+
+//서비스 이용 건수 
+    		   
+           serviceUse[0] = 5665;
+    		   
+           serviceUse[1] = 561;
+    		   
+           serviceUse[2] = 94;
+    		   
+           serviceUse[3] = 10;
+
+		serviceUse[4] = 0;
+
+		serviceUse[5] = 0;
+
+		serviceUse[6] = 0;
+
+		serviceUse[7] = 0;
+
+		serviceUse[8] = 0;
+		
+			serviceUse[9] = 1;
+
+//퇴원이유
+outReason[0] = 231;    //1.호전
+outReason[1] = 4758;    //2.사망
+outReason[2] = 285;    //3.(환자 보호자의)귀가요청
+outReason[3] = 510;    //4.전원(외부기관)
+outReason[4] = 38;    //5.철회   
+outReason[5] = 64;    //6.기타
+//돌봄 장소 선호 
+carePlace[0] = 1803;     //1. 가정
+carePlace[1] = 34;     //2.시설(요양원)
+carePlace[2] = 3807;     //3.의료기관(호스피스 병동)
+carePlace[3] = 587;     //4.의료기관(급성기 병동)
+carePlace[4] = 51;     //5.의료기관(요양병원)
+carePlace[5] = 45;     //6.기타
+//돌봄 장소 선호 (2017년 이전)
+beforeCarePlace[0] = 3;     //1.가정
+beforeCarePlace[1] = 1;     //2.의료기관
+beforeCarePlace[2] = 0;     //3.시설
+beforeCarePlace[3] = 0;     //4.기타
+
+//서비스 별 검색
+function fnSearch(){
+    vObj = document.frmSearch;
+	
+	var $filterBtn = $('.filter_term .choice_btn input.active');
+	var startYear = $("#start_year").val();
+	var startMonth = $("#start_month").val();
+	var endYear = $("#end_year").val();
+	var endMonth = $("#end_month").val();
+	var stDate = new Date(Number(startYear), Number(startMonth), 1) ;
+    var endDate = new Date( Number(endYear), Number(endMonth), 1) ;
+    var btMs = endDate.getTime() - stDate.getTime() ;
+    var btMonth = btMs / (1000*60*60*24*30) ;
+    
+	if($filterBtn.hasClass('year')){
+        $("#date_flag").val('year');
+        
+        if(startYear == "" || endYear == ""){
+        	alert("연도를 선택해주세요.");
+        	return;
+        }
+        if(Number(endYear)-Number(startYear) > 11){
+            alert("최대 12연도까지 조회 가능 합니다.");
+            return;
+        }
+        if(Number(startYear) > Number(endYear)){
+            alert("기간을 다시 선택해 주세요.");
+            return;
+        }
+        
+    } else {
+    	$("#date_flag").val('month');
+    	
+    	if(startYear == "" || endYear == ""){
+            alert("연도를 선택해주세요.");
+            return;
+        }
+    	if(startMonth == "" || endMonth == ""){
+            alert("월을 선택해주세요.");
+            return;
+        }
+    	if(Number(endYear)-Number(startYear) > 1){
+            alert("최대 12개월까지 조회 가능 합니다.");
+            return;
+        }
+    	if(Number(startYear) > Number(endYear)){
+            alert("기간을 다시 선택해 주세요.");
+            return;
+        }
+    	if(Number(startYear) == Number(endYear)){
+    		if(Number(startMonth) > Number(endMonth)){
+                alert("기간을 다시 선택해 주세요.");
+                return;
+            }
+    	}
+        if(Math.ceil(btMonth) > 12){
+        	alert("최대 12개월까지 조회 가능 합니다.");
+        	return;
+        }     
+    }
+    
+	$("#first_flag").val('N');
+    vObj.action = "/boffice/visualization/patientDataVisualization.do";
+    vObj.submit();
+}
+</script>
+<link rel="stylesheet" href="/boffice/css/visualization.css" />
+<script src='/boffice/js/ibleaders.js'></script>
+<script src='/boffice/js/highcharts.js'></script>
+<script src='/boffice/js/ibchartinfo.js'></script>
+<script src='/boffice/js/ibchart.js'></script>
+</head>
+
+<body>
+    <div id="main">
+
+        
+
+
+
+
+<!-- Tray -->
+	<div id="tray" class="box">
+
+		<p class="f-left box">
+
+			<!-- Switcher -->
+			<span class="f-left" id="switcher">
+				<a href="#" rel="1col" class="styleswitch ico-col1" title="Display one column"><img src="/boffice/image/design/switcher-1col.gif" alt="1 Column" /></a>
+				<a href="#" rel="2col" class="styleswitch ico-col2" title="Display two columns"><img src="/boffice/image/design/switcher-2col.gif" alt="2 Columns" /></a>
+			</span>
+
+			 <strong>좌측메뉴보이기&nbsp;숨기기</strong>
+
+		</p>
+        
+        
+            
+             
+             
+		<p class="f-right"> 
+             <span class="timerArea"><span id="timer"></span>
+             <strong><a href="javascript:;">연장<!-- img src="/images_std/kor/btn/btn_time_extension.gif" align="top" --></a></strong></span>  
+             &nbsp;&nbsp;&nbsp;
+             <script type="text/javascript" src="/js/timeoutchk.js"></script>
+             
+              User: <strong><a href="javascript:;">슈퍼관리자</a></strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>
+		      <a href="javascript:;" id="logout">Log out</a></strong>
+         </p>
+
+	</div> <!--  /tray -->
+
+	<hr class="noscreen" />
+
+<script>
+    /*function fGoTopMenu(vMenuNo, vUrl)
+    {
+    	if (vUrl == "#this")
+    		return;
+    	
+    	setCookie( "admin_top_menu_no", vMenuNo, 2 );
+    	setCookie( "admin_sub_menu_no", vMenuNo, 2 );
+    	
+    	window.location.href=vUrl;
+    	
+    }*/
+</script>    
+	<!-- Menu -->
+	<div id="menu" class="box">
+ 	
+		<ul class="box">
+  		
+			<li  id='menu-active'><a href="javascript:;"><span>환자정보</span></a></li>
+  		
+			<li  ><a href="javascript:;"><span>기관정보</span></a></li>
+  		
+			<li  ><a href="javascript:;"><span>사별가족만족도조사</span></a></li>
+  		
+			<li  ><a href="javascript:;"><span>교육관리</span></a></li>
+  		
+			<li  ><a href="javascript:;"><span>시스템관리</span></a></li>
+  		
+			<li  ><a href="javascript:;"><span>홈페이지 관리</span></a></li>
+     
+		</ul>
+
+
+	</div> <!-- /header -->
+
+        <hr class="noscreen" />
+
+        <!-- Columns -->
+        <div id="cols" class="box">
+
+            
+ 
+
+
+	<!-- Aside (Left Column) -->
+		<div id="aside" class="box">
+
+			<div class="padding box">
+
+				<!-- Logo (Max. width = 200px) -->
+				<p id="logo"><a href="http://hospice.cancer.go.kr" target="_blank"><img src="/boffice/image/design/logo.gif" alt="Our logo" title="Visit Site" /></a></p>
+
+
+			</div> <!-- /padding -->
+
+<script>
+    /*function fGoMenu(vCurMenuNo, vMenuNo, vUrl, vTarget)
+    {
+    	if (vUrl == "#this")
+    		return;
+    	
+    	setCookie( "admin_cur_menu_no", vCurMenuNo, 2 );
+    	setCookie( "admin_sub_menu_no", vMenuNo, 2 );
+    	setCookie( "admin_top_menu_no", 382, 2 );
+    	
+    	if(vTarget == '_blank'){
+    		var newWindow = window.open("about:blank");
+    		newWindow.location.href = vUrl;
+    	}else{
+    		window.location.href=vUrl;	
+    	}
+    	
+    	
+    }*/
+</script> 
+
+			<ul class="box">         
+  	
+                             <li class="fmenu" style="CURSOR:hand" onClick="clickblock(1)"><a href="javascript:;">공지사항</a></li>
+  	
+                             <li class="fmenu" style="CURSOR:hand" onClick="clickblock(2)"><a href="javascript:;">환자정보관리</a></li>
+
+                             <li class="fmenu" style="CURSOR:hand" onClick="clickblock(3)"><a href="javascript:;">비동의 환자</a></li> 
+               
+                         <li class="fsub fmenu_1" id="block3"  style='display:none' ><a href="javascript:;">말기 환자</a>
+               
+                         <li class="fsub fmenu_2" id="block3"  style='display:none' ><a href="javascript:;">소아청소년 환자</a>
+  	
+                             <li class="fmenu" style="CURSOR:hand" onClick="clickblock(4)"><a href="javascript:;">2017년 8월 4일 이전 환자정보</a></li>
+  	
+                             <li class="fmenu" style="CURSOR:hand" onClick="clickblock(5)"><a href="javascript:;">FAQ</a></li>
+  	
+                             <li class="fmenu" style="CURSOR:hand" onClick="clickblock(6)"><a href="javascript:;">통계</a></li>
+  	
+                             <li class="fmenu" style="CURSOR:hand" onClick="clickblock(7)"><a href="javascript:;">2014년 이전 환자정보</a></li>
+  	
+                             <li class="fmenu" style="CURSOR:hand" onClick="clickblock(8)"><a href="javascript:;">환자정보관리(구)</a></li>
+  	
+                             <li class="fmenu" style="CURSOR:hand" onClick="clickblock(9)"><a href="javascript:;">자문형호스피스 비동의 환자(구)</a></li>
+  	
+                             <li class="fmenu" style="CURSOR:hand" onClick="clickblock(10)"><a href="javascript:;">데이터시각화</a></li>
+  
+			</ul>
+
+<script type="text/javascript">
+    $(document).ready(function(){    	
+      //nChooseBlockNo
+      try {
+ // sosunj   	  
+ //        document.getElementById("block1").style.display='';
+      } catch(e) {} 
+	});
+
+  
+   var gTopNavName="관리자 &gt   환자정보   &gt   데이터시각화";  // 데이터시각화
+   var gSubNavName="";  // 데이터시각화
+   var gSubNavName2="데이터시각화";  // 기관관리 > 자료제출형 게시판 서브 타이틀 용
+
+
+</script>		
+
+		</div> <!-- /aside -->
+
+            <!-- Content (Right Column) -->
+            <div id="content" class="box infoPatient type_hospitalization manager">
+                <h1>
+                    <div id="top_nav_menu_nm">&nbsp;</div>
+                </h1>
+
+                <!-- Headings -->
+                <h2>
+                    <div id="sub_nav_menu_nm">&nbsp;</div>
+                </h2>
+
+                <form action="" method="get" id="frmSearch" name="frmSearch">
+                    <input name="returl" id="returl" type="hidden" value="/boffice/visualization/patientDataVisualization.do" />
+                    <input name="menu_no" id="menu_no" type="hidden" value="607" />
+                    <input name="date_flag" id="date_flag" type="hidden" value="" />
+                    <input name="service_type" id="service_type" type="hidden" value="2" />
+                    <input name="str_service_type" id="str_service_type" type="hidden" value="입원형" />
+                    <input name="first_flag" id="first_flag" type="hidden" value="Y" />
+                    
+	                <h3 class="s_tit manager_show">서비스 신규 이용환자 비율<a href="javascript:;" onmouseover="document.getElementById('help_txt01').style.display='block';"onmouseout="document.getElementById('help_txt01').style.display='none';"><img id="childPatientRegNo" onblur="" src="/Common/help.png" alt="물음표" /></a>
+	                    <div id="help_txt01" class="help_box">
+	                    차트 조건<br/><br/>서비스 이용정보(STEP04)의 입원/등록/초기평가일 기준의 환자 정보이며, 중복 데이터를 허용하지 않음.<br/>
+	                    환자 구분이나 서비스 구분의 데이터가 0 이어도 영역은 남아 있음.<br/><br/>
+	                         서비스 시작일 기준으로 선택한 연도에 따라 노출되지 않는 데이터가 있음.<br/>
+	                         ① 2018 8월 이후 소아 청소년 서비스 시작<br/>
+	                         ② 2017 9월 이후 자문형 서비스 시작<br/>
+	                         ③ 2014년 이후 가정형 서비스 시작<br/>
+	                         ④ 2014년 이전 입원형 서비스
+	                    </div>
+	                </h3>
+	                <div class="conBox">
+	                    <div class="percent_wrap manager_show">
+	                        <div>
+	                            <div class="left">
+	                                <h1><span id="yyyy1">2019년</span> 최초 서비스 이용 환자 수</h1>
+	                                <p><span class="number_comma total">6957</span>명</p>
+	                            </div>
+	                            <div class="right">
+	                                <h1><span id="yyyy2">2019년</span> 최초 서비스 이용 환자  비율</h1>
+	                                <div class="bar_box">
+	                                    <span>환자 구분</span>
+	                                    <div class="bar">
+	                                        <div>
+	                                            <p>말기환자 <span class="number_comma terminal_cnt">6856</span>명<br />(<span class="percentage terminal_rate">98.5</span>%)</p>
+	                                        </div>
+	                                        <div>
+	                                            <p>소아청소년 환자 <span class="number_comma child_cnt">101</span>명<br />(<span class="percentage child_rate">1.5</span>%)</p>
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                                <div class="bar_box">
+	                                    <span>서비스 구분</span>
+	                                    <div class="bar">
+	                                        <div>
+	                                            <p>입원형 <span class="number_comma admission_cnt">6331</span>건<br />(<span class="percentage admission_rate">70.9</span>%)</p>
+	                                        </div>
+	                                        <div>
+	                                            <p>가정형 <span class="number_comma home_cnt">790</span>건<br />(<span class="percentage home_rate">8.8</span>%)</p>
+	                                        </div>
+	                                        <div>
+	                                            <p>자문형 <span class="number_comma counsel_cnt">1707</span>건<br />(<span class="percentage counsel_rate">19.1</span>%)</p>
+	                                        </div>
+	                                        <div>
+	                                            <p>소아청소년 <span class="number_comma child_hospice_cnt">101</span>건<br />(<span class="percentage child_hospice_rate">1.1</span>%)</p>
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                            </div>
+	                        </div>
+	                        <span class="precautions">&middot;&nbsp;1월 1월부터 현재일까지 최초로 서비스를 이용하는 환자의 누적 데이며 이전 연도를 선택한 경우는 1월 1일부터 12월 31일까지의 누적 데이터임. </span>
+	                        <div class="filter">
+	                            <select>
+	                                <option>선택</option>
+	                                 <option>2013년 </option>
+ <option>2014년 </option>
+ <option>2015년 </option>
+ <option>2016년 </option>
+ <option>2017년 </option>
+ <option>2018년 </option>
+ <option selected >2019년 </option>
+
+	                            </select>
+	                            <button type="button">조회</button>
+	                        </div>
+	                    </div>
+	                    <div class="step_cancer">
+	                        <img src="/boffice/image/visualization/type_01_on.gif" usemap="#Map" />
+	                        <map name="Map" id="Map">
+	                            <area shape="rect" coords="167,0,334,67" href="javascript:;" alt="" />
+	                            <area shape="rect" coords="334,0,501,67" href="javascript:;" alt="" />
+	                            <area shape="rect" coords="501,0,690,89" href="javascript:;" alt="" />
+	                        </map>
+	                    </div>
+	                    <div class="filter_term">
+	                        <div class="choice_btn">
+	                            <input type="button" value="월 단위" class="month active">
+	                            <input type="button" value="연 단위" class="year">
+	                        </div>
+	                        <div class="choice_term">
+	                            <div>
+	                                <select id="start_year" name="start_year">
+	                                    <option value="">연선택</option>
+	                                     <option value='2013'>2013년 </option>
+ <option value='2014'>2014년 </option>
+ <option value='2015'>2015년 </option>
+ <option value='2016'>2016년 </option>
+ <option value='2017'>2017년 </option>
+ <option value='2018'>2018년 </option>
+ <option value='2019' selected >2019년 </option>
+
+	                                </select>
+	                                <select class="select_month" id="start_month" name="start_month">
+	                                    <option value="">월 선택</option>
+	                                     <option value='01' selected >01월</option>
+ <option value='02'>02월</option>
+ <option value='03'>03월</option>
+ <option value='04'>04월</option>
+ <option value='05'>05월</option>
+ <option value='06'>06월</option>
+ <option value='07'>07월</option>
+ <option value='08'>08월</option>
+ <option value='09'>09월</option>
+ <option value='10'>10월</option>
+ <option value='11'>11월</option>
+ <option value='12'>12월</option>
+
+	                                </select>
+	                            </div>
+	                            <span class="wave_symbol">~</span>
+	                            <div>
+	                                <select id="end_year" name="end_year">
+	                                    <option value="">연선택</option>
+	                                     <option value='2013'>2013년 </option>
+ <option value='2014'>2014년 </option>
+ <option value='2015'>2015년 </option>
+ <option value='2016'>2016년 </option>
+ <option value='2017'>2017년 </option>
+ <option value='2018'>2018년 </option>
+ <option value='2019' selected >2019년 </option>
+
+	                                </select>
+	                                <select class="select_month" id="end_month" name="end_month">
+	                                    <option value="">월 선택</option>
+	                                     <option value='01'>01월</option>
+ <option value='02'>02월</option>
+ <option value='03'>03월</option>
+ <option value='04'>04월</option>
+ <option value='05' selected >05월</option>
+ <option value='06'>06월</option>
+ <option value='07'>07월</option>
+ <option value='08'>08월</option>
+ <option value='09'>09월</option>
+ <option value='10'>10월</option>
+ <option value='11'>11월</option>
+ <option value='12'>12월</option>
+
+	                                </select>
+	                            </div>
+	                            <input type="button" onclick="javascript:;" value="조회">
+	                        </div>
+	                        <div class="result_term">
+	                            조회기간 : <span class="visible"></span><i class="visible"></i><span class="visible"></span>~<span class="visible"></span><i class="visible"></i><span class="visible"></span>
+	                        </div>
+	                    </div>
+	                    <ul class="precautions">
+	                        <li>※ 월 단위는 연도 구분 없이 최대 12개월까지만 조회 가능하며, 연 단위 선택 시 하위 월은 선택 할 수 없으며 최대 12연도까지 조회 가능 함. </li>
+	                    </ul>
+	                    <div class="chart_box_wrap">
+	                        <div class="chart_box visible_margin">
+	                            <div class="number_of_patient_box overlap">
+	                                <h1>서비스 이용 환자 수
+	                                    <a href="javascript:;" onmouseover="document.getElementById('help_txt02').style.display='block';"onmouseout="document.getElementById('help_txt02').style.display='none';"><img id="childPatientRegNo" onblur="" src="/Common/help.png" alt="물음표" /></a>
+	                                    <div id="help_txt02" class="help_box">
+	                                차트 조건<br/><br/>해당 월/연도에 서비스 이용정보(STEP 04)의 입원형 서비스를 시작한 건수로 환자 기준 중복 데이터 허용 됨
+	                                    </div>
+	                                </h1>
+	                                <div id="number_of_patient"></div>
+	                            </div>
+	                            <div class="patient_number_box">
+	                                <h1>성별 & 연령별 이용 환자 수
+	                                    <a href="javascript:;" onmouseover="document.getElementById('help_txt03').style.display='block';"onmouseout="document.getElementById('help_txt03').style.display='none';"><img id="childPatientRegNo" onblur="" src="/Common/help.png" alt="물음표" /></a>
+	                                    <div id="help_txt03" class="help_box">
+	                                차트 조건<br/><br/>서비스 이용정보(STEP 04) 입원일 기준 환자의 성별과 연령의 분포
+	                                    </div>
+	                                </h1>
+	                                <div id="patient_number"></div>
+	                            </div>
+	                        </div>
+	                        <div class="chart_box">
+	                            <div class="medical_security_distribution_box">
+	                                <h1>의료보장 분포
+	                                    <a href="javascript:;" onmouseover="document.getElementById('help_txt04').style.display='block';"onmouseout="document.getElementById('help_txt04').style.display='none';"><img id="childPatientRegNo" onblur="" src="/Common/help.png" alt="물음표" /></a>
+	                                    <div id="help_txt04" class="help_box">
+	                                차트 조건<br/><br/>'기본정보(Step 01)'의 의료보장 항목에 등록된 데이터                                    
+	                                    </div>
+	                                </h1>
+	                                <div id="medical_security_distribution"></div>
+	                            </div>
+	                            <div class="religion_distribution_box">
+	                                <h1>종교 분포
+	                                    <a href="javascript:;" onmouseover="document.getElementById('help_txt05').style.display='block';"onmouseout="document.getElementById('help_txt05').style.display='none';"><img id="childPatientRegNo" onblur="" src="/Common/help.png" alt="물음표" /></a>
+	                                    <div id="help_txt05" class="help_box">
+	                                차트 조건<br/><br/>'기본정보(Step 01)'의 종교 항목에 등록된 데이터                                                
+	                                    </div>
+	                                </h1>
+	                                <div id="religion_distribution"></div>
+	                            </div>
+	                            <div class="last_period_insight_box">
+	                                <h1>말기 병식
+	                                    <a href="javascript:;" onmouseover="document.getElementById('help_txt06').style.display='block';"onmouseout="document.getElementById('help_txt06').style.display='none';"><img id="childPatientRegNo" onblur="" src="/Common/help.png" alt="물음표" /></a>
+	                                    <div id="help_txt06" class="help_box">
+	                                차트 조건<br/><br/>'초기 평가 정보(Step 03)'의 말기 병식(환자) 항목에 등록된 데이터                                    
+	                                    </div>
+	                                </h1>
+	                                <div id="last_period_insight"></div>
+	                            </div>
+	                        </div>
+	                        <div class="chart_box visible_margin ">
+	                            <div class="terminal_diagnosis_box overlap">
+	                                <h1>말기 진단 분류
+	                                    <a href="javascript:;" onmouseover="document.getElementById('help_txt07').style.display='block';"onmouseout="document.getElementById('help_txt07').style.display='none';"><img id="childPatientRegNo" onblur="" src="/Common/help.png" alt="물음표" /></a>
+	                                    <div id="help_txt07" class="help_box">
+	                                차트 조건<br/><br/>'초기 평가 정보(Step 03)'의 말기 진단 분류 항목에 등록된 데이터로 중복 데이터 허용 됨
+	                                    </div>
+	                                </h1>
+	                                <div id="terminal_diagnosis"></div>
+	                            </div>
+	                            <div class="preferred_place_box">
+	                                <h1>돌봄 장소 선호
+	                                    <a href="javascript:;" onmouseover="document.getElementById('help_txt08').style.display='block';"onmouseout="document.getElementById('help_txt08').style.display='none';"><img id="childPatientRegNo" onblur="" src="/Common/help.png" alt="물음표" /></a>
+	                                    <div id="help_txt08" class="help_box">
+	                                차트 조건<br/><br/>'초기 평가 정보(Step 03)'의 돌봄 선호 장소(환자) 항목에 등록된 데이터<br/>
+	                                        2017년 9월 이전 환자의 경우 돌봄 장소가 분리되어 차트가 2개로 표현 됨
+	                                    </div>
+	                                </h1>
+	                                <div id="preferred_place"></div>
+	                                <div id="preferred_place_before"></div>
+	                            </div>
+	                        </div>
+	                        <div class="chart_box visible_margin">
+	                            <div class="number_of_service_use_box">
+	                                <h1>서비스 이용 건수
+	                                    <a href="javascript:;" onmouseover="document.getElementById('help_txt09').style.display='block';"onmouseout="document.getElementById('help_txt09').style.display='none';"><img id="childPatientRegNo" onblur="" src="/Common/help.png" alt="물음표" /></a>
+	                                    <div id="help_txt09" class="help_box">
+	                                차트 조건<br/><br/>환자 기준 서비스 이용 내역(Step 04)중 '입원형' 서비스 이용 건수에 대한 분포<br/>
+	                                예시 데이터 : A 환자가 입원형 - 자문형 - 자문형 - 입원형 - 입원형일 경우 입원형 이용 건수는 3회에 카운트 됨
+	                                    </div>
+	                                </h1>
+	                                <div id="number_of_service_use"></div>
+	                            </div>
+	                            <div class="reason_for_discharge_box">
+                                    <h1>퇴원 이유
+	                                    <a href="javascript:;" onmouseover="document.getElementById('help_txt10').style.display='block';"onmouseout="document.getElementById('help_txt10').style.display='none';"><img id="childPatientRegNo" onblur="" src="/Common/help.png" alt="물음표" /></a>
+	                                    <div id="help_txt10" class="help_box">
+	                                차트 조건<br/><br/>'서비스 이용 내역(Step 04)'의 퇴원 이유 항목에 등록된 데이터이며 2017년 8월 4일 이전 서비스 이용 환자는 해당 정보가 없음
+	                                    </div>
+                                    </h1>
+                                    <div id="reason_for_discharge"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- /content -->
+            <script src='https://twilight92.github.io/portfolio/new/hospice/js/visualization.js'></script>
+        </div>
+        <!-- /cols -->
+
+        <!-- Footer -->
+        	
+	<hr class="noscreen" />	
+	
+	<div id="footer" class="box">
+
+		<p class="f-left">&copy; 2015 hospice.cancer.go.kr All Rights Reserved &reg;</p>
+
+	</div> 
+	
+	
+<script>
+	try {
+	    document.getElementById("top_nav_menu_nm").innerHTML = gTopNavName;
+	    document.getElementById("sub_nav_menu_nm").innerHTML = gSubNavName;
+        document.getElementById("sub_nav_title_nm").innerHTML = gSubNavName2;
+	 } catch (e) {}
+	 
+	 /**
+	   * 로딩바
+	   */
+    function loading(chk){
+        if(chk == true ){
+            $("#loading-mask").show();
+            $("#loading-image").show();
+        }else{
+            $("#loading-mask").hide();
+            $("#loading-image").hide();
+        }
+    }
+	 
+</script>		
+
+<iframe id="ifrExcelDownload" name="ifrExcelDownload" frameborder="0" width="0" height="0" src="about:blank"></iframe>
+
+
+
+<div id="loading-mask"></div>
+    <div id="loading-image"><img alt="loading" src="/boffice/image/common/ajax-loader.gif" /></div> 
+<style type="text/css">
+	#loading-image {   
+		position: absolute;   
+		left: 50%; 
+		top: 50%;
+		z-index: 9001;
+		vertical-align: middle;
+        display:none
+	} 
+	#loading-mask {
+		position:absolute;  
+		left:0;
+		top:0;
+		width: 100%;
+		height: 100%;
+		z-index:9000;  
+		filter: alpha(opacity=20);    
+		opacity: 0.2;        
+        -moz-opacity: 0.2;
+		background-color:#ffffff;  
+		display:none; 
+	}
+</style>                    
+
+<input type="hidden" name="dummy" id="dummy" value=""/>
+
+        <!-- /footer -->
+
+    </div>
+    <!-- /main -->
+
+</body>
+</html>
