@@ -161,6 +161,7 @@ section h2:before{position:absolute;top:-20px;left:-40px;content:'';display:bloc
 .nodisplay{display:none}
 #fp-nav ul li a.active span,.fp-slidesNav ul li a.active span,#fp-nav ul li:hover a.active span,.fp-slidesNav ul li:hover a.active span{background-color:#6985E2}
 .kakao .kv-txt .yellow{color:#FFCD00!important}
+.in .kv-txt .yellow{color:#EB7172!important}
 .kakao .number_box{margin:20px 0}
 .kakao .about-me-greeting{font-size:15px}
 .pengtai .kv-txt .yellow{color:#7A5F50!important}
