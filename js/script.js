@@ -245,7 +245,7 @@ var sjPortfolio = (function (d, w, $) {
 	var progress = {
 		act: function () {
 			var $number = $('.number_box').find('> div');
-			var number = [28, 44]
+			var number = [28, 45]
 			$number.each(function (i) {
 				var $number = $(this),
 					$percentNumber = $number.find('.number'),
