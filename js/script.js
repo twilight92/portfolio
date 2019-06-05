@@ -206,7 +206,7 @@ var sjPortfolio = (function (d, w, $) {
 			sCircleInner : '.circle-mask-inner'
 		},
 		getPercentData : function(){
-			var aPercent = [50, 100, 100, 100, 100, 100],
+			var aPercent = [50, 50, 100, 100, 100, 100, 100],
 				slickIdx = $(this.select.sSlickActive).index() - 1;
             this.select.percentData = aPercent[slickIdx];
 		},
